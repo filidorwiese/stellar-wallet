@@ -87,7 +87,7 @@ const questions = [
 
 inquirer.prompt(questions).then((answers) => {
   if (answers.sourceAddress === answers.destinationAddress) {
-    fail('Source address not be the same as the destination address')
+    fail('Sender address not be the same as the destination address')
   }
   console.log()
 
