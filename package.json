@@ -1,0 +1,22 @@
+{
+  "name": "stellar-wallet-cli",
+  "version": "1.0.0",
+  "description": "Simple Stellar Wallet client, made in node using js-stellar-sdk",
+  "author": "Filidor Wiese <fili@fili.nl>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:filidorwiese/stellar-wallet.git"
+  },
+  "bin": "./bin/cmd.js",
+  "scripts": {
+    "postversion": "git push --follow-tags"
+  },
+  "dependencies": {
+    "chalk": "1.1.3",
+    "inquirer": "3.0.6",
+    "lodash.get": "4.4.2",
+    "minimist": "^1.2.0",
+    "stellar-sdk": "0.7.7"
+  }
+}
