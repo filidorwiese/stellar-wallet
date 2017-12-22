@@ -34,7 +34,7 @@ To check the balance on your wallet, run:
 
 You'll be asked for the public address to check, or you can provide it directly on the command line:
 
-`$ stellar-wallet-cli balance rJysCK99GqUBmgB54mcV7NwxYH29NRs1QQ`
+`$ stellar-wallet-cli balance GDBQN3B6R2TZGWH6YPH4BOLWIEPA7WR3WRVFPUMDRJGPVSEWZPGEB6JI`
 
 #### Making a payment from your existing wallet to another
 
@@ -42,7 +42,12 @@ To make a payment from a wallet you control to another address, run:
 
 `$ stellar-wallet-cli pay`
 
-You'll be asked for the XRP amount to send, the destination address, the destination tag (optional), the sender address and finally the sender secret.
+You'll be asked for the XLM amount to send, the destination address, the sender address and finally the sender secret.
+
+Alternatively, you can provide these params on the command line:
+
+`$ stellar-wallet-cli pay --amount [amount] --to [destination address] --from [source address]`
+
 
 ---
 
