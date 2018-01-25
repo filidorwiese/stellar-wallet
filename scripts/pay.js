@@ -72,6 +72,13 @@ const questions = [
   },
   {
     type: 'input',
+    name: 'memo',
+    default: argv.memo,
+    message: 'Enter memo (optional):',
+    validate: (value) => value && value.length > 26 ? 'Please enter a valid memo' : true,
+  },
+  {
+    type: 'input',
     name: 'sourceAddress',
     default: argv.from,
     message: 'Enter sender address:',
@@ -124,13 +131,24 @@ inquirer.prompt(questions).then((answers) => {
 
           console.log('Preparing payment transaction...')
           const sourceKeypair = StellarSdk.Keypair.fromSecret(answers.sourceSecret);
-          const transaction = new StellarSdk.TransactionBuilder(account)
+          let transaction = new StellarSdk.TransactionBuilder(account)
             .addOperation(StellarSdk.Operation.payment({
               destination: answers.destinationAddress,
               asset: currencyType,
               amount: String(answers.amount)
             }))
-            .build()
+
+          // Add Memo?
+          if (answers.memo) {
+            if (String(answers.memo).match(/^[0-9]*$/)) {
+              transaction = transaction.addMemo(StellarSdk.Memo.id(answers.memo))
+            } else {
+              transaction = transaction.addMemo(StellarSdk.Memo.text(answers.memo))
+            }
+          }
+
+          // Finalize
+          transaction = transaction.build()
           transaction.sign(sourceKeypair)
 
           console.log('Submitting payment...')

@@ -46,7 +46,7 @@ You'll be asked for the XLM amount to send, the destination address, the sender 
 
 Alternatively, you can provide these params on the command line:
 
-`$ stellar-wallet-cli pay --amount [amount] --to [destination address] --from [source address]`
+`$ stellar-wallet-cli pay --amount [amount] --to [destination address] --memo 1234 --from [source address]`
 
 
 ---
