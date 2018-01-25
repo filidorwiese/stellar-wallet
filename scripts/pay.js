@@ -15,6 +15,7 @@ console.log(chalk.green('-----------------------------------------------'), '\n'
 const argv = minimist(process.argv.slice(2))
 const currency = 'XLM'
 const currencyType = StellarSdk.Asset.native()
+const baseReserve = 0.5
 
 const getBalance = (address) => {
   return server.loadAccount(address).then((account) => {
@@ -87,7 +88,7 @@ const questions = [
 
 inquirer.prompt(questions).then((answers) => {
   if (answers.sourceAddress === answers.destinationAddress) {
-    fail('Sender address not be the same as the destination address')
+    fail('Sender address should not be the same as the destination address')
   }
   console.log()
 
@@ -97,13 +98,13 @@ inquirer.prompt(questions).then((answers) => {
   ]).then(([sourceBalance, destinationBalance]) => {
 
     console.log('Current destination balance:', chalk.green(destinationBalance, currency))
-    if (!destinationBalance || destinationBalance + answers.amount < 20) {
-      fail('Send at least 20 XLM to create the destination address')
+    if (!destinationBalance || destinationBalance + answers.amount < baseReserve) {
+      fail(`Send at least ${baseReserve} XLM to create the destination address`)
     }
 
     console.log('Current sender balance:', chalk.green(sourceBalance, currency))
-    if (!sourceBalance || sourceBalance - answers.amount < 20) {
-      fail('There should be at least 20 XLM remaining at the sender address')
+    if (!sourceBalance || sourceBalance - answers.amount < baseReserve) {
+      fail(`There should be at least ${baseReserve} XLM remaining at the sender address`)
     }
 
     inquirer.prompt([
