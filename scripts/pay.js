@@ -16,6 +16,7 @@ const argv = minimist(process.argv.slice(2))
 const currency = 'XLM'
 const currencyType = StellarSdk.Asset.native()
 const baseReserve = 0.5
+const minimumAccountBalance = baseReserve * 2
 
 const getBalance = (address) => {
   return server.loadAccount(address).then((account) => {
@@ -104,13 +105,13 @@ inquirer.prompt(questions).then((answers) => {
   ]).then(([sourceBalance, destinationBalance]) => {
 
     console.log('Current destination balance:', chalk.green(destinationBalance, currency))
-    if (!destinationBalance || destinationBalance + answers.amount < baseReserve) {
-      fail(`Send at least ${baseReserve} XLM to create the destination address`)
+    if (!destinationBalance || destinationBalance + answers.amount < minimumAccountBalance) {
+      fail(`Send at least ${minimumAccountBalance} XLM to create the destination address`)
     }
 
     console.log('Current sender balance:', chalk.green(sourceBalance, currency))
-    if (!sourceBalance || sourceBalance - answers.amount < baseReserve) {
-      fail(`There should be at least ${baseReserve} XLM remaining at the sender address`)
+    if (!sourceBalance || sourceBalance - answers.amount < minimumAccountBalance) {
+      fail(`There should be at least ${minimumAccountBalance} XLM remaining at the sender address`)
     }
 
     inquirer.prompt([
