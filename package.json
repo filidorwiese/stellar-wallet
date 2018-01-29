@@ -1,6 +1,6 @@
 {
   "name": "stellar-wallet-cli",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Simple Stellar Wallet client, made in node using js-stellar-sdk",
   "author": "Filidor Wiese <fili@fili.nl>",
   "license": "ISC",
