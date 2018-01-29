@@ -89,7 +89,7 @@ const questions = [
     type: 'input',
     name: 'sourceSecret',
     message: 'Enter sender secret:',
-    validate: (value) => StellarBase.StrKey.isValidEd25519SecretSeed ? true : 'Invalid secret'
+    validate: (value) => StellarBase.StrKey.isValidEd25519SecretSeed(value) ? true : 'Invalid secret'
   }
 ]
 
