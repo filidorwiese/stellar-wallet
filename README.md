@@ -16,6 +16,8 @@ Runs on Linux, Window and MacOSX
 2. Run `npm install -g stellar-wallet-cli` to install as a global dependency
 3. Run `stellar-wallet-cli` to use
 
+Update with `npm update -g stellar-wallet-cli`
+
 ---
 
 ### Usage:
@@ -46,7 +48,7 @@ You'll be asked for the XLM amount to send, the destination address, the sender 
 
 Alternatively, you can provide these params on the command line:
 
-`$ stellar-wallet-cli pay --amount [amount] --to [destination address] --memo [memo string|number] --from [source address]`
+`$ stellar-wallet-cli pay --amount [amount] --to [destination address] --memo [memo string|number]`
 
 
 ---
