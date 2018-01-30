@@ -18,7 +18,7 @@ const getBalance = (address) => {
         console.log('  ' + chalk.green(balance.balance, balance.asset_code || 'XLM'))
       }
     })
-    console.log()
+    console.log("\n", chalk.yellow('Inflation pool'), account.inflation_destination || 'not set', "\n")
     process.exit(0)
   }).catch(fail)
 }
