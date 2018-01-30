@@ -80,13 +80,6 @@ const questions = [
   },
   {
     type: 'input',
-    name: 'sourceAddress',
-    default: argv.from,
-    message: 'Enter sender address:',
-    validate: (value) => StellarBase.StrKey.isValidEd25519PublicKey(value) ? true : 'Please enter a valid address'
-  },
-  {
-    type: 'input',
     name: 'sourceSecret',
     message: 'Enter sender secret:',
     validate: (value) => StellarBase.StrKey.isValidEd25519SecretSeed(value) ? true : 'Invalid secret'
@@ -94,13 +87,15 @@ const questions = [
 ]
 
 inquirer.prompt(questions).then((answers) => {
-  if (answers.sourceAddress === answers.destinationAddress) {
+  const sourceKeypair = StellarSdk.Keypair.fromSecret(answers.sourceSecret)
+  const sourceAddress = sourceKeypair.publicKey()
+  if (sourceAddress === answers.destinationAddress) {
     fail('Sender address should not be the same as the destination address')
   }
   console.log()
 
   return Promise.all([
-    getBalance(answers.sourceAddress),
+    getBalance(sourceAddress),
     getBalance(answers.destinationAddress)
   ]).then(([sourceBalance, destinationBalance]) => {
 
@@ -127,11 +122,10 @@ inquirer.prompt(questions).then((answers) => {
       }
 
       console.log('\nConnecting...')
-      server.loadAccount(answers.sourceAddress)
+      server.loadAccount(sourceAddress)
         .then((account) => {
 
           console.log('Preparing payment transaction...')
-          const sourceKeypair = StellarSdk.Keypair.fromSecret(answers.sourceSecret);
           let transaction = new StellarSdk.TransactionBuilder(account)
             .addOperation(StellarSdk.Operation.payment({
               destination: answers.destinationAddress,
@@ -156,10 +150,10 @@ inquirer.prompt(questions).then((answers) => {
           server.submitTransaction(transaction)
             .then((transactionResult) => {
               console.log('\nSuccess! View the transaction at: ')
-              console.log(chalk.yellow(transactionResult._links.transaction.href), "\n")
+              console.log(chalk.yellow(transactionResult._links.transaction.href), '\n')
 
               console.log('Waiting for balance to update (use Ctrl-C to abort)')
-              waitForBalancesUpdate(answers.sourceAddress, answers.destinationAddress, sourceBalance)
+              waitForBalancesUpdate(sourceAddress, answers.destinationAddress, sourceBalance)
             })
             .catch(fail)
         })
