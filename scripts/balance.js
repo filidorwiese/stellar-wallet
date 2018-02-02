@@ -1,5 +1,6 @@
 'use strict'
 const chalk = require('chalk')
+const minimist = require('minimist')
 const inquirer = require('inquirer')
 const StellarSdk = require('stellar-sdk')
 const StellarBase = require('stellar-base')
@@ -11,16 +12,57 @@ console.log(chalk.green('-----------------------------------------------'))
 console.log(chalk.green('Stellar Wallet'), chalk.yellow('Balance Check'))
 console.log(chalk.green('-----------------------------------------------'), '\n')
 
+const argv = minimist(process.argv.slice(3))
+const limitTransactions = argv.limit || 10
+
 const getBalance = (address) => {
-  server.loadAccount(address).then((account) => {
-    account.balances.forEach((balance) => {
-      if (balance.balance > 0) {
-        console.log('  ' + chalk.green(balance.balance, balance.asset_code || 'XLM'))
+  server.loadAccount(address)
+    .then((account) => {
+      // Show balances
+      console.log(chalk.yellow('Current Balance'))
+      account.balances.forEach((balance) => {
+        if (balance.balance > 0) {
+          console.log(balance.balance, balance.asset_code || 'XLM')
+        }
+      })
+      console.log()
+
+      // Show inflation pool if set
+      if (account.inflation_destination) {
+        console.log(chalk.yellow('Inflation pool'))
+        console.log(account.inflation_destination, '\n')
       }
-    })
-    console.log("\n", chalk.yellow('Inflation pool'), account.inflation_destination || 'not set', "\n")
-    process.exit(0)
-  }).catch(fail)
+
+      // Show recent transactions
+      server.operations()
+        .forAccount(address)
+        .order('desc')
+        .limit(limitTransactions)
+        .call()
+        .then((results) => {
+          if (results.records && results.records.length) {
+            console.log(chalk.yellow(`Last ${limitTransactions} transactions`))
+            results.records.map(displayRecord, address)
+            console.log()
+          }
+        })
+
+    }).catch(fail)
+}
+
+const displayRecord = (record, address) => {
+  switch (record.type) {
+    case 'payment':
+      const amount = +parseFloat(record.amount).toFixed(5)
+      const plusMinus = record.from === address ? '-' : '+'
+      const directionArrow = record.from === address ? '→' : '←'
+      const currency = record.asset_type === 'native' ? 'XLM' : p.asset_type
+      console.log(`${record.created_at} ${record.type}\t${plusMinus}${amount} ${currency} ${directionArrow} ${record.to}`)
+      break
+    default:
+      console.log(`${record.created_at} ${record.type}`)
+      break
+  }
 }
 
 const fail = (message) => {
