@@ -39,6 +39,11 @@ You'll be asked for the public address to check, or you can provide it directly 
 
 `$ stellar-wallet-cli balance GDBQN3B6R2TZGWH6YPH4BOLWIEPA7WR3WRVFPUMDRJGPVSEWZPGEB6JI`
 
+The output will also show if an inflation destination is set for this account and the last 10 transactions.
+To see more transaction, up the limit with:
+
+`$ stellar-wallet-cli balance GDBQN3B6R2TZGWH6YPH4BOLWIEPA7WR3WRVFPUMDRJGPVSEWZPGEB6JI --limit [number]`
+
 #### Making a payment from your existing wallet to another
 
 To make a payment from a wallet you control to another address, run:
@@ -49,7 +54,7 @@ You'll be asked for the XLM amount to send, the destination address, the sender 
 
 Alternatively, you can provide these params on the command line:
 
-`$ stellar-wallet-cli pay --amount [amount] --to [destination address] --memo [memo string|number]`
+`$ stellar-wallet-cli pay --amount [number] --to [account] --memo [string|number]`
 
 #### Setting the inflation pool for your wallet
 
