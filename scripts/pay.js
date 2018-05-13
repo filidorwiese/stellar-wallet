@@ -4,6 +4,7 @@ const minimist = require('minimist')
 const inquirer = require('inquirer')
 const StellarSdk = require('stellar-sdk')
 const StellarBase = require('stellar-base')
+const config = require('./config.json')
 
 const server = new StellarSdk.Server('https://horizon.stellar.org')
 StellarSdk.Network.usePublicNetwork()
@@ -13,10 +14,7 @@ console.log(chalk.green('Stellar Wallet'), chalk.yellow('Make Payment'))
 console.log(chalk.green('-----------------------------------------------'), '\n')
 
 const argv = minimist(process.argv.slice(2))
-const currency = 'XLM'
 const currencyType = StellarSdk.Asset.native()
-const baseReserve = 0.5
-const minimumAccountBalance = baseReserve * 2
 
 const getBalance = (address) => {
   return server.loadAccount(address).then((account) => {
@@ -36,9 +34,9 @@ const waitForBalancesUpdate = (sourceAddress, destinationAddress, origSourceBala
 
     if (sourceBalance < origSourceBalance) {
 
-      console.log('New source balance:', chalk.green(sourceBalance, currency))
+      console.log('New source balance:', chalk.green(sourceBalance, config.currency))
 
-      console.log('New destination balance:', chalk.green(destinationBalance, currency))
+      console.log('New destination balance:', chalk.green(destinationBalance, config.currency))
 
       process.exit(0)
 
@@ -61,7 +59,7 @@ const questions = [
     type: 'input',
     name: 'amount',
     default: argv.amount,
-    message: 'Enter ' + currency + ' amount to send:',
+    message: 'Enter ' + config.currency + ' amount to send:',
     validate: (value) => isNaN(parseInt(value)) ? 'Please enter a number' : true
   },
   {
@@ -99,14 +97,14 @@ inquirer.prompt(questions).then((answers) => {
     getBalance(answers.destinationAddress)
   ]).then(([sourceBalance, destinationBalance]) => {
 
-    console.log('Current destination balance:', chalk.green(destinationBalance, currency))
-    if (!destinationBalance || destinationBalance + answers.amount < minimumAccountBalance) {
-      fail(`Send at least ${minimumAccountBalance} XLM to create the destination address`)
+    console.log('Current destination balance:', chalk.green(destinationBalance, config.currency))
+    if (!destinationBalance || destinationBalance + answers.amount < config.minimumAccountBalance) {
+      fail(`Send at least ${config.minimumAccountBalance} XLM to create the destination address`)
     }
 
-    console.log('Current sender balance:', chalk.green(sourceBalance, currency))
-    if (!sourceBalance || sourceBalance - answers.amount < minimumAccountBalance) {
-      fail(`There should be at least ${minimumAccountBalance} XLM remaining at the sender address`)
+    console.log('Current sender balance:', chalk.green(sourceBalance, config.currency))
+    if (!sourceBalance || sourceBalance - answers.amount < config.minimumAccountBalance) {
+      fail(`There should be at least ${config.minimumAccountBalance} XLM remaining at the sender address`)
     }
 
     inquirer.prompt([

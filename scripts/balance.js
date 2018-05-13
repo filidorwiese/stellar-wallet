@@ -22,7 +22,7 @@ const getBalance = (address) => {
       console.log(chalk.yellow('Current Balance'))
       account.balances.forEach((balance) => {
         if (balance.balance > 0) {
-          console.log(balance.balance, balance.asset_code || 'XLM')
+          console.log(balance.balance, balance.asset_code || config.currency)
         }
       })
       console.log()
@@ -56,7 +56,7 @@ const displayRecord = (record, address) => {
       const amount = +parseFloat(record.amount).toFixed(5)
       const plusMinus = record.from === address ? '-' : '+'
       const directionArrow = record.from === address ? '→' : '←'
-      const currency = record.asset_type === 'native' ? 'XLM' : p.asset_type
+      const currency = record.asset_type === 'native' ? config.currency : p.asset_type
       console.log(`${record.created_at} ${record.type}\t${plusMinus}${amount} ${currency} ${directionArrow} ${record.to}`)
       break
     default:
