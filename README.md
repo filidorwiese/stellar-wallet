@@ -40,7 +40,7 @@ You'll be asked for the public address to check, or you can provide it directly 
 `$ stellar-wallet-cli balance GDBQN3B6R2TZGWH6YPH4BOLWIEPA7WR3WRVFPUMDRJGPVSEWZPGEB6JI`
 
 The output will also show if an inflation destination is set for this account and the last 10 transactions.
-To see more transaction, up the limit with:
+To see more transactions, you can up the limit:
 
 `$ stellar-wallet-cli balance GDBQN3B6R2TZGWH6YPH4BOLWIEPA7WR3WRVFPUMDRJGPVSEWZPGEB6JI --limit [number]`
 
