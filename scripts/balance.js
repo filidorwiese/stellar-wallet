@@ -4,6 +4,7 @@ const minimist = require('minimist')
 const inquirer = require('inquirer')
 const StellarSdk = require('stellar-sdk')
 const StellarBase = require('stellar-base')
+const config = require('./config.json')
 
 const server = new StellarSdk.Server('https://horizon.stellar.org')
 StellarSdk.Network.usePublicNetwork()
