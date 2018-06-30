@@ -68,10 +68,6 @@ And provide the pool address and your secret key to continue.
 
 When complete you can verify if the pool is correctly set by running `stellar-wallet-cli balance`
 
----
-
-Donations are welcome at `GDBQN3B6R2TZGWH6YPH4BOLWIEPA7WR3WRVFPUMDRJGPVSEWZPGEB6JI` :)
-
 ### ISC License
 
 Copyright (c) 2018, Filidor Wiese
