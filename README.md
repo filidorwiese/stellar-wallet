@@ -58,28 +58,11 @@ Alternatively, you can provide these params on the command line:
 
 #### Setting the inflation pool for your wallet
 
-Inflation is explained here: https://www.stellar.org/developers/guides/concepts/inflation.html
-
 To set an inflation destination for your account, run:
 
 `$ stellar-wallet-cli set-inflation-pool`
 
 And provide the pool address and your secret key to continue. When complete you can verify if the pool is correctly set by running `stellar-wallet-cli balance`.
 
+Inflation is explained here: https://www.stellar.org/developers/guides/concepts/inflation.html
 My personal favorite pool: https://lumenaut.net/
-
-### ISC License
-
-Copyright (c) 2018, Filidor Wiese
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
