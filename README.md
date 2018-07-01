@@ -65,4 +65,5 @@ To set an inflation destination for your account, run:
 And provide the pool address and your secret key to continue. When complete you can verify if the pool is correctly set by running `stellar-wallet-cli balance`.
 
 Inflation is explained here: https://www.stellar.org/developers/guides/concepts/inflation.html
+
 My personal favorite pool: https://lumenaut.net/
