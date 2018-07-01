@@ -10,7 +10,7 @@ Runs on Linux, Window and MacOSX
 - Generating a new wallet (works offline)
 - Checking the balance of an existing wallet
 - Making a payment from your existing wallet to another
-- Setting the inflation pool for you wallet
+- Setting the inflation pool for your wallet
 
 ### Installation
 1. Make sure you have the current [Node LTS](https://nodejs.org/en/) release (or higher) installed on your system
@@ -25,7 +25,7 @@ Update with `npm update -g stellar-wallet-cli`
 
 #### Generating a new wallet
 
-Pull the internet cord of your computer (or disable wifi) and run the following command:
+Pull the internet cord out of your computer (or disable wifi) and run the following command:
 
 `$ stellar-wallet-cli generate`
 
@@ -64,9 +64,9 @@ To set an inflation destination for your account, run:
 
 `$ stellar-wallet-cli set-inflation-pool`
 
-And provide the pool address and your secret key to continue.
+And provide the pool address and your secret key to continue. When complete you can verify if the pool is correctly set by running `stellar-wallet-cli balance`.
 
-When complete you can verify if the pool is correctly set by running `stellar-wallet-cli balance`
+My personal favorite pool: https://lumenaut.net/
 
 ### ISC License
 
