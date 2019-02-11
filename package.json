@@ -17,6 +17,6 @@
     "inquirer": "5.2.0",
     "lodash.get": "4.4.2",
     "minimist": "^1.2.0",
-    "stellar-sdk": "0.8.0"
+    "stellar-sdk": "0.13.0"
   }
 }
