@@ -129,7 +129,7 @@ inquirer.prompt(questions).then((answers) => {
               destination: answers.destinationAddress,
               asset: currencyType,
               amount: String(answers.amount)
-            }))
+            })).setTimeout(1000)
 
           // Add Memo?
           if (answers.memo) {
