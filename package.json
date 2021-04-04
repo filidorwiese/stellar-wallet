@@ -16,7 +16,7 @@
     "chalk": "2.4.1",
     "inquirer": "5.2.0",
     "lodash.get": "4.4.2",
-    "minimist": "^1.2.0",
-    "stellar-sdk": "0.13.0"
+    "minimist": "^1.2.5",
+    "stellar-sdk": "^8.1.0"
   }
 }
