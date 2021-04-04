@@ -7,7 +7,6 @@ const StellarBase = require('stellar-base')
 const config = require('./config.json')
 
 const server = new StellarSdk.Server('https://horizon.stellar.org')
-StellarSdk.Network.usePublicNetwork()
 
 console.log(chalk.green('-----------------------------------------------'))
 console.log(chalk.green('Stellar Wallet'), chalk.yellow('Balance Check'))
@@ -57,7 +56,7 @@ const displayRecord = (record, address) => {
       const amount = +parseFloat(record.amount).toFixed(5)
       const plusMinus = record.from === address ? '-' : '+'
       const directionArrow = record.from === address ? '→' : '←'
-      const currency = record.asset_type === 'native' ? config.currency : p.asset_type
+      const currency = record.asset_type === 'native' ? config.currency : record.asset_type
       console.log(`${record.created_at} ${record.type}\t${plusMinus}${amount} ${currency} ${directionArrow} ${record.to}`)
       break
     default:

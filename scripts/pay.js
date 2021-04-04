@@ -7,7 +7,6 @@ const StellarBase = require('stellar-base')
 const config = require('./config.json')
 
 const server = new StellarSdk.Server('https://horizon.stellar.org')
-StellarSdk.Network.usePublicNetwork()
 
 console.log(chalk.green('-----------------------------------------------'))
 console.log(chalk.green('Stellar Wallet'), chalk.yellow('Make Payment'))
@@ -20,7 +19,7 @@ const getBalance = (address) => {
   return server.loadAccount(address).then((account) => {
     let xlmBalance = 0
     account.balances.forEach((balance) => {
-      if (balance.asset_type) xlmBalance += balance.balance
+      if (balance.asset_type === 'native') xlmBalance += balance.balance
     })
     return +xlmBalance
   }).catch(fail)
@@ -124,7 +123,7 @@ inquirer.prompt(questions).then((answers) => {
         .then((account) => {
 
           console.log('Preparing payment transaction...')
-          let transaction = new StellarSdk.TransactionBuilder(account)
+          let transaction = new StellarSdk.TransactionBuilder(account, { networkPassphrase: Networks.PUBLIC })
             .addOperation(StellarSdk.Operation.payment({
               destination: answers.destinationAddress,
               asset: currencyType,

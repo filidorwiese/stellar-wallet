@@ -5,7 +5,6 @@ const StellarSdk = require('stellar-sdk')
 const StellarBase = require('stellar-base')
 
 const server = new StellarSdk.Server('https://horizon.stellar.org')
-StellarSdk.Network.usePublicNetwork()
 
 console.log(chalk.green('-----------------------------------------------'))
 console.log(chalk.green('Stellar Wallet'), chalk.yellow('Set Inflation Pool'))
@@ -15,7 +14,7 @@ const setInflationPool = (secret, pool) => {
   const sourceKeypair = StellarSdk.Keypair.fromSecret(secret)
   server.loadAccount(sourceKeypair.publicKey())
     .then((account) => {
-      const tx = new StellarSdk.TransactionBuilder(account)
+      const tx = new StellarSdk.TransactionBuilder(account, { networkPassphrase: Networks.PUBLIC })
         .addOperation(StellarSdk.Operation.setOptions({
           inflationDest: pool
         })).build()
