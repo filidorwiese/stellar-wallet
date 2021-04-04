@@ -49,7 +49,17 @@ const waitForBalancesUpdate = (sourceAddress, destinationAddress, origSourceBala
 }
 
 const fail = (message) => {
-  console.error(chalk.red(message), '\n')
+  console.error(chalk.red(message))
+  if (message.response && message.response.data && message.response.data.extras && message.response.data.extras.result_codes && message.response.data.extras.result_codes.operations) {
+    const reason = message.response.data.extras.result_codes.operations;
+    switch(reason) {
+      case 'op_underfunded':
+        console.log(chalk.red('reason:', 'Sender account has insufficient funds'));
+        break;
+      default:
+        console.log(chalk.red('reason:', reason))
+    }
+  }
   process.exit(1)
 }
 
@@ -123,7 +133,7 @@ inquirer.prompt(questions).then((answers) => {
         .then((account) => {
 
           console.log('Preparing payment transaction...')
-          let transaction = new StellarSdk.TransactionBuilder(account, { networkPassphrase: Networks.PUBLIC })
+          let transaction = new StellarSdk.TransactionBuilder(account, { fee: StellarBase.BASE_FEE, networkPassphrase: StellarBase.Networks.PUBLIC })
             .addOperation(StellarSdk.Operation.payment({
               destination: answers.destinationAddress,
               asset: currencyType,

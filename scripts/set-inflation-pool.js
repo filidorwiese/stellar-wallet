@@ -14,7 +14,7 @@ const setInflationPool = (secret, pool) => {
   const sourceKeypair = StellarSdk.Keypair.fromSecret(secret)
   server.loadAccount(sourceKeypair.publicKey())
     .then((account) => {
-      const tx = new StellarSdk.TransactionBuilder(account, { networkPassphrase: Networks.PUBLIC })
+      const tx = new StellarSdk.TransactionBuilder(account, { fee: StellarBase.BASE_FEE, networkPassphrase: StellarBase.Networks.PUBLIC })
         .addOperation(StellarSdk.Operation.setOptions({
           inflationDest: pool
         })).build()
